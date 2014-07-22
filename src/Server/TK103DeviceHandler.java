@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Server;
 
 import java.io.BufferedReader;
@@ -15,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import static java.lang.Thread.sleep;
 import java.sql.Date;
-import java.util.logging.Level;
 
 /**
  *
@@ -24,12 +18,13 @@ import java.util.logging.Level;
 public class TK103DeviceHandler {
 
     private static TK103DeviceHandler tK103DeviceHandler;
+    public static int i=0;
 
     private TK103DeviceHandler() {
-
     }
 
     public static TK103DeviceHandler getInstance() {
+        i++;
         if (tK103DeviceHandler == null) {
             tK103DeviceHandler = new TK103DeviceHandler();
         }
@@ -104,7 +99,7 @@ public class TK103DeviceHandler {
 
     //decode the incoming string into the parametes which needed to make a LocationBox
     public LocationBox createLocation(String s) {
-        
+
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.SECOND, -5);
         return new LocationBox("12345", new Date(cal.getTime().getTime()),

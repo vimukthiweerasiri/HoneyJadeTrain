@@ -99,9 +99,9 @@ public class Trip {
             while (rs.next()) {
                 stations.add(new Station(rs.getInt(1), new Coordinate(rs.getFloat(2), rs.getFloat(3)), new Coordinate(rs.getFloat(4), rs.getFloat(5))));
             }
-//            this.passedStationIds = new boolean[stations.size()];
-//            this.stationTimes = new Date[stations.size()];
-//
+            this.passedStationIds = new boolean[stations.size()];
+            this.stationTimes = new Date[stations.size()];
+
 //            for (int i = 0; i < stations.size(); i++) {
 //                Coordinate upside = stations.get(i).getUpside();
 //                Waypoint nearest = getNearestWaypoint(upside.getLatitude(), upside.getLongitude());

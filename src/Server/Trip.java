@@ -70,7 +70,7 @@ public class Trip {
         this.setupMode = false;
         this.routeID = routeId;
         System.out.println(this.routeID);
-        //this.setTripData();
+        this.setTripData();
         //this.estimatedArrivalTimeForStations();
     }
 
@@ -93,24 +93,24 @@ public class Trip {
             } catch (SQLException ex) {
                 Logger.getLogger(Trip.class.getName()).log(Level.SEVERE, null, ex);
             }
-        /*    
+            
         try {
             ResultSet rs = dataReader.getStationsData(routeID);
             while (rs.next()) {
                 stations.add(new Station(rs.getInt(1), new Coordinate(rs.getFloat(2), rs.getFloat(3)), new Coordinate(rs.getFloat(4), rs.getFloat(5))));
             }
-            this.passedStationIds = new boolean[stations.size()];
-            this.stationTimes = new Date[stations.size()];
-
-            for (int i = 0; i < stations.size(); i++) {
-                Coordinate upside = stations.get(i).getUpside();
-                Waypoint nearest = getNearestWaypoint(upside.getLatitude(), upside.getLongitude());
-                stationTimes[i] = nearest.getEstimateReachTime();
-            }
+//            this.passedStationIds = new boolean[stations.size()];
+//            this.stationTimes = new Date[stations.size()];
+//
+//            for (int i = 0; i < stations.size(); i++) {
+//                Coordinate upside = stations.get(i).getUpside();
+//                Waypoint nearest = getNearestWaypoint(upside.getLatitude(), upside.getLongitude());
+//                stationTimes[i] = nearest.getEstimateReachTime();
+//            }
         } catch (SQLException ex) {
             Logger.getLogger(Trip.class.getName()).log(Level.SEVERE, null, ex);
         }
-*/
+
         //initialize IdpreviousNext
         //initialize IdpreviousNext
     }

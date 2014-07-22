@@ -125,9 +125,14 @@ public class Trip {
             long delay = waypoint.getEstimateReachTime().getTime() - locationBox.getSent_time().getTime();
 
             for (int i = 0; i < stationTimes.length; i++) {
-                stationTimes[i] = new Date(stationTimes[i].getTime() + delay);
+                System.out.println(delay);
+                //stationTimes[i] = new Date(stationTimes[i].getTime() + delay);
+                //stationTimes[i] = new Date(delay);
             }
-        } else {
+//            System.out.println("");
+        } 
+        
+        else {
             Station st = stations.get(this.stationsPassed);       //next station
             float stationLength = (float) (Math.pow(st.getUpside().getLatitude() - st.getDownside().getLatitude(), 2) + Math.pow(st.getUpside().getLongitude() - st.getDownside().getLongitude(), 2));
             float a, b;

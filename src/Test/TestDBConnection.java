@@ -17,9 +17,9 @@ public class TestDBConnection {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/testhoneyjade", "root", "");
         ResultSet result = conn.createStatement().executeQuery("SELECT * FROM stations");
-        while(result.next()){
+        while (result.next()) {
             System.out.print(result.getString(1));
-            System.out.println(" "+result.getString(2));
+            System.out.println(" " + result.getString(2));
         }
     }
 }

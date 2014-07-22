@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Server;
 
 import java.sql.Date;
@@ -13,19 +12,18 @@ import java.sql.Date;
  * @author Vimukthi Weerasiri
  */
 public class LocationBox {
+
     private String imei;
-    private Date sent_time,recieved_time;
-    private float latitude, longitude,speed, direction;
-    
-    
+    private Date sent_time, recieved_time;
+    private float latitude, longitude, speed, direction;
+
     /*
-    private long imei;
-    private Date time;
-    private float latitude, longitude;
-    private float speed, direction;
-    private int delay;
-    */
-    
+     private long imei;
+     private Date time;
+     private float latitude, longitude;
+     private float speed, direction;
+     private int delay;
+     */
     public LocationBox(String imei, Date sent_time, Date recieved_time, float latitude, float longitude, float speed, float direction) {
         this.imei = imei;
         this.sent_time = sent_time;
@@ -130,5 +128,5 @@ public class LocationBox {
     public void setDirection(float direction) {
         this.direction = direction;
     }
-    
+
 }

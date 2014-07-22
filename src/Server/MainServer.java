@@ -46,6 +46,7 @@ public class MainServer {
     public void executeLocation(LocationBox locationbox) {
         int routeid = findRouteIdByImei(locationbox.getImei());
         System.out.println(routeid);
+        Trip.getInstance(routeid);
         //Trip.getInstance(routeid).execute(locationbox);
         //System.out.println(Trip.getInstance(routeid).routeID);
     }

@@ -6,14 +6,14 @@ public class HoneyJade {
         new HoneyJade();
     }
 
-    private HoneyJade(){
+    private HoneyJade() {
         startawesomeness();
     }
 
     private void startawesomeness() {
         //skipping server for now
         //TK103DeviceHandler.getInstance().executeServer();
-         TK103DeviceHandler.getInstance().handleData("");
+        TK103DeviceHandler.getInstance().handleData("");
     }
 
 }

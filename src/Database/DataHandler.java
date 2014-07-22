@@ -29,7 +29,7 @@ public class DataHandler {
     private static final Logger logger = Logger.getLogger("Database");
 
     private static DataHandler instance;
-    
+
     public DataHandler() throws SQLException {
         this.hostname = "localhost";
         this.dbName = "gpsdata";
@@ -52,11 +52,12 @@ public class DataHandler {
         conn = DriverManager.getConnection(connectionUrl.toString(),
                 username, password);
     }
-    
+
     public static DataHandler getInstance() {
         try {
-            if(instance == null)
+            if (instance == null) {
                 instance = new DataHandler();
+            }
             return instance;
         } catch (SQLException ex) {
             Logger.getLogger(DataHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -65,13 +66,13 @@ public class DataHandler {
     }
 
     public ResultSet getRouteID(String imei) throws SQLException {
-	return run("SELECT routeID FROM route WHERE imei = '" + imei + "'");
+        return run("SELECT routeID FROM route WHERE imei = '" + imei + "'");
     }
-    
+
     public ResultSet run(String query) throws SQLException {
-	Statement select = conn.createStatement();
-	ResultSet result = select.executeQuery(query);
-	return result;
+        Statement select = conn.createStatement();
+        ResultSet result = select.executeQuery(query);
+        return result;
     }
 
     public ResultSet getStationsData(int routeID) throws SQLException {

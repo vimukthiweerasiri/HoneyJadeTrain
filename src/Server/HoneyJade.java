@@ -11,12 +11,9 @@ public class HoneyJade {
     }
 
     private void startawesomeness() {
-//        TK103DeviceHandler.getInstance().executeServer();
-         //TK103DeviceHandler.getInstance().handleData("");
-        System.out.println(TK103DeviceHandler.getInstance().i);
-        System.out.println(TK103DeviceHandler.getInstance().i);
-        System.out.println(TK103DeviceHandler.getInstance().i);
-        System.out.println(TK103DeviceHandler.getInstance().i);
+        //skipping server for now
+        //TK103DeviceHandler.getInstance().executeServer();
+         TK103DeviceHandler.getInstance().handleData("");
     }
 
 }

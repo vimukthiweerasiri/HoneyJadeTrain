@@ -18,7 +18,7 @@ import java.sql.Date;
 public class TK103DeviceHandler {
 
     private static TK103DeviceHandler tK103DeviceHandler;
-    public static int i=0;
+    public static int i = 0;
 
     private TK103DeviceHandler() {
     }

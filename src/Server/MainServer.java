@@ -34,7 +34,7 @@ public class MainServer {
     public int findRouteIdByImei(String imie) {
         try {
             ResultSet ids = handler.getRouteID(imie);
-            if(ids.next()) {
+            if (ids.next()) {
                 return ids.getInt("routeID");
             }
         } catch (SQLException ex) {
@@ -46,7 +46,7 @@ public class MainServer {
     public void executeLocation(LocationBox locationbox) {
         int routeid = findRouteIdByImei(locationbox.getImei());
         System.out.println(routeid);
-        Trip.getInstance(routeid).execute(locationbox);
+        //Trip.getInstance(routeid).execute(locationbox);
         //System.out.println(Trip.getInstance(routeid).routeID);
     }
 

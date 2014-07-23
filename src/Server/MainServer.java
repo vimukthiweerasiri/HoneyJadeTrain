@@ -45,7 +45,6 @@ public class MainServer {
 
     public void executeLocation(LocationBox locationbox) {
         int routeid = findRouteIdByImei(locationbox.getImei());
-        System.out.println(routeid);
         Trip.getInstance(routeid).execute(locationbox);
        // Waypoint way0=Trip.getInstance(routeid).getNearestWaypoint((float)(2.9), (float) 5.2);
         //Waypoint way1=Trip.getInstance(routeid).getNearestWaypoint(3, (float) 5.3);

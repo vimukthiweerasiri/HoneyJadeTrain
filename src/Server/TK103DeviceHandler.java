@@ -89,11 +89,18 @@ public class TK103DeviceHandler {
     }
 
     //get recieved string from server and decide the type and what to do
-    public void handleData(String s) {
+    public void handleData(String s) throws InterruptedException {
         //DeviceHandlingServer.getInstance().saveLog(s);
         //if it is a LocationBox
         //DeviceHandlingServer.getInstance().saveLocation(null);
-        DeviceHandlingServer.getInstance().executeLocation(createLocation(s));
+        //DeviceHandlingServer.getInstance().executeLocation(createLocation(s));
+        int i=8;
+        while(i<9){
+            DeviceHandlingServer.getInstance().executeLocation(createLocation(Integer.toString(i)));
+            Thread.sleep(1000);
+            i++;
+            
+        }
 
     }
 
@@ -101,7 +108,7 @@ public class TK103DeviceHandler {
     public LocationBox createLocation(String s) {
 
         Calendar cal = Calendar.getInstance();
-        cal.set(2014, 6, 23, 8, 8, 00);
+        cal.set(2014, 6, 23, 8, Integer.parseInt(s), 00);
         //       cal.add(Calendar.SECOND, -5);
         return new LocationBox("12345", new Date(cal.getTime().getTime()),
                 new Date(cal.getTime().getTime()),

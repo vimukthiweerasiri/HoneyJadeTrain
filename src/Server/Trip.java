@@ -127,7 +127,7 @@ public class Trip {
         int h=i/3600;
         int m=(i-h*3600)/60;
         int se=i-h*3600-m*60;
-        s=Integer.toString(h)+" "+Integer.toString(m)+" "+Integer.toString(se);
+        s=Integer.toString(h)+":"+Integer.toString(m)+":"+Integer.toString(se)+"am";
         return s;
     }
     
@@ -176,7 +176,7 @@ public class Trip {
 
     //removed passedstationIDs from the argument list
     public void updateRasberryHandler() {
-        RasberryHandler.getInstance().updateFromTrip(routeID,passedStationIds,estimatedArrivalTime);
+        RasberryHandler.getInstance().updateFromTrip(routeID,stations,passedStationIds,estimatedArrivalTime);
         //RasberryHandler.getInstance().updateFromTrip();
     }
    

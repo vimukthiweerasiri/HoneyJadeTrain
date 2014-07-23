@@ -5,6 +5,12 @@
  */
 package Server;
 
+import Database.DataHandler;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Vimukthi Weerasiri
@@ -12,9 +18,10 @@ package Server;
 public class RasberryHandler {
 
     private static RasberryHandler rasberryHandler;
-
+    
+    
     private RasberryHandler() {
-
+        
     }
 
     public static RasberryHandler getInstance() {
@@ -24,9 +31,15 @@ public class RasberryHandler {
         return rasberryHandler;
     }
 
-    public void updateFromTrip(int routeID,boolean[] passedStationIds, String[] estimatedArrivalTime) {
+    public void updateFromTrip(int routeID,ArrayList<Station> station,boolean[] passedStationIds, String[] estimatedArrivalTime) {
         for(int i=0;i<passedStationIds.length;i++){
-            System.out.println(routeID+" "+" "+passedStationIds[i]+" "+estimatedArrivalTime[i]);
+            //Rasberry.getInstance(station.get(0).getId()).display(routeID,estimatedArrivalTime[i]);
+            //System.out.println(routeID+" "+station.get(i).getId()+" "+passedStationIds[i]+" "+estimatedArrivalTime[i]);
+            //System.out.println(station.get(i).getId());
+            //System.out.println(Rasberry.getInstance(station.get(i).getId()).rasberryID);
+            Rasberry.getInstance(station.get(i).getId()).display(routeID, estimatedArrivalTime[i]);
         }
     }
+    
+   
 }

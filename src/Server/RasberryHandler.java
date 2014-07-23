@@ -5,11 +5,7 @@
  */
 package Server;
 
-import Database.DataHandler;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -18,10 +14,9 @@ import java.util.logging.Logger;
 public class RasberryHandler {
 
     private static RasberryHandler rasberryHandler;
-    private static DataHandler dataReader = null;
-    
+
     private RasberryHandler() {
-        
+
     }
 
     public static RasberryHandler getInstance() {

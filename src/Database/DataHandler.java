@@ -68,10 +68,6 @@ public class DataHandler {
     public ResultSet getRouteID(String imei) throws SQLException {
         return run("SELECT routeID FROM route WHERE imei = '" + imei + "'");
     }
-    
-    public ResultSet getStationNameByID(int id) throws SQLException {
-        return run("SELECT stationName FROM station_rp WHERE stationID = '" + Integer.toString(id) + "'");
-    }
 
     public ResultSet run(String query) throws SQLException {
         Statement select = conn.createStatement();

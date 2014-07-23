@@ -187,6 +187,7 @@ public class Trip {
     //removed passedstationIDs from the argument list
     public void updateRasberryHandler() {
         RasberryHandler.getInstance().updateFromTrip(routeID,stations,passedStationIds,estimatedArrivalTime);
+        WebServer.getInstance().handleData(routeID,stations,passedStationIds,estimatedArrivalTime);
         //RasberryHandler.getInstance().updateFromTrip();
     }
    

@@ -14,14 +14,14 @@ import java.util.ArrayList;
 public class Rasberry {
 
     public static ArrayList<Rasberry> rasberry = new ArrayList<>();
-    public int rasberryID;
+    private int rasberryID;
 
     private Rasberry(int rasberryId) {
         this.rasberryID = rasberryId;
     }
 
     public void display(int routeID,String message) {
-        System.out.println(rasberryID + ": The train "+routeID+" will arrive at " + message);
+        System.out.println(rasberryID + ": The train "++"will arrive at " + message);
     }
 
     public static Rasberry getInstance(int rasBID) {

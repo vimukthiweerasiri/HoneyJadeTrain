@@ -5,8 +5,6 @@
  */
 package Server;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Vimukthi Weerasiri
@@ -26,15 +24,9 @@ public class RasberryHandler {
         return rasberryHandler;
     }
 
-    public void updateFromTrip(int routeID,ArrayList<Station> station, boolean[] passedStationIds, String[] estimatedArrivalTime) {
-        //assuming that one number of rP for one station
-        for (int i = 0; i < passedStationIds.length; i++) {
-            //System.out.println(Rasberry.getInstance(station.get(i).getId()).rasberryID);
-            Rasberry.getInstance(station.get(i).getId()).display(routeID, estimatedArrivalTime[i]);
-            
-            
-            //System.out.println(routeID + " " + " " + passedStationIds[i] + " " + estimatedArrivalTime[i]);
-
+    public void updateFromTrip(int routeID,boolean[] passedStationIds, String[] estimatedArrivalTime) {
+        for(int i=0;i<passedStationIds.length;i++){
+            System.out.println(routeID+" "+" "+passedStationIds[i]+" "+estimatedArrivalTime[i]);
         }
     }
 }

@@ -14,20 +14,20 @@ import java.util.ArrayList;
 public class Rasberry {
 
     public static ArrayList<Rasberry> rasberry = new ArrayList<>();
-    public int rasberryID;
+    private int rasberryID;
 
     private Rasberry(int rasberryId) {
-        this.rasberryID = rasberryId;
+        rasberryID = rasberryId;
     }
 
-    public void display(int routeID,String message) {
-        System.out.println(rasberryID + ": The train "+routeID+" will arrive at " + message);
+    public void display(String message) {
+        System.out.println(rasberryID + ": The train will arrive at " + message);
     }
 
     public static Rasberry getInstance(int rasBID) {
-        for (Rasberry rasberry1 : rasberry) {
-            if (rasberry1.rasberryID == rasBID) {
-                return rasberry1;
+        for (int i = 0; i < rasberry.size(); i++) {
+            if (rasberry.get(i).rasberryID == rasBID) {
+                return rasberry.get(i);
             }
         }
         Rasberry newrasberry = new Rasberry(rasBID);

@@ -6,6 +6,7 @@
 package Server;
 
 import Database.DataHandler;
+import com.sun.jmx.snmp.BerDecoder;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -66,7 +67,7 @@ public class Trip {
 
     private Trip(int routeId) {
         this.routeID = routeId;
-        System.out.println(this.routeID);
+        //.println(this.routeID);
         this.setTripData();
         //this.estimatedArrivalTimeForStations();
     }
@@ -94,51 +95,56 @@ public class Trip {
             }
             this.passedStationIds = new boolean[stations.size()];
             this.stationTimes = new Time[stations.size()];
+            this.estimatedArrivalTime=new String[stations.size()];
 
             //initializing the estimated arrival times
             for (int i = 0; i < stations.size(); i++) {
                 Coordinate upside = stations.get(i).getUpside();
                 Waypoint nearest = getNearestWaypoint(upside.getLatitude(), upside.getLongitude());
-                System.out.println(nearest.getActualReachTime().toString());
+                //System.out.println(nearest.getActualReachTime().toString());
                 stationTimes[i] = nearest.getEstimateReachTime();
             }
-            System.out.println("");
+            //System.out.println("");
         } catch (SQLException ex) {
             Logger.getLogger(Trip.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    private int getSeconds(Time time){
+        String[] temp=time.toString().split(":");
+        int hour=Integer.parseInt(temp[0]);
+        int min=Integer.parseInt(temp[1]);
+        int sec=Integer.parseInt(temp[2]);
+//        System.out.println(hour+" "+min+" "+sec+" :"+ (sec +(min*60)+(hour*3600)));
+//        System.out.println(sec+(min*60)+(hour*3600));
+        
+        return sec+(min*60)+(hour*3600);
+        
+    }
+    
+    private String getTimebyString(int i){
+        String s="";
+        int h=i/3600;
+        int m=(i-h*3600)/60;
+        int se=i-h*3600-m*60;
+        s=Integer.toString(h)+" "+Integer.toString(m)+" "+Integer.toString(se);
+        return s;
+    }
+    
+    
     public void execute(LocationBox locationBox) {
         Waypoint waypoint;
 
-        if (!setupMode) {
             waypoint = getNearestWaypoint(locationBox.getLatitude(), locationBox.getLongitude());
-            long delay = waypoint.getEstimateReachTime().getTime() - locationBox.getSent_time().getTime();
-
+            Time newtime=new Time(locationBox.getRecieved_time().getTime());
+            Time waytime=new Time(waypoint.getEstimateReachTime().getTime());
+            
             for (int i = 0; i < stationTimes.length; i++) {
-                System.out.println(delay);
-                //stationTimes[i] = new Date(stationTimes[i].getTime() + delay);
-                //stationTimes[i] = new Date(delay);
+                //System.out.println(getSeconds(stationTimes[i])+getSeconds(newtime)-getSeconds(waytime));
+               // System.out.println(getTimebyString(getSeconds(stationTimes[i])));
+                estimatedArrivalTime[i]=getTimebyString(getSeconds(stationTimes[i])+getSeconds(newtime)-getSeconds(waytime));
             }
-//            System.out.println("");
-        } else {
-            Station st = stations.get(this.stationsPassed);       //next station
-            float stationLength = (float) (Math.pow(st.getUpside().getLatitude() - st.getDownside().getLatitude(), 2) + Math.pow(st.getUpside().getLongitude() - st.getDownside().getLongitude(), 2));
-            float a, b;
-            a = (float) (Math.pow((locationBox.getLatitude() - st.getUpside().getLatitude()), 2) - Math.pow((locationBox.getLongitude() - st.getUpside().getLongitude()), 2));
-            b = (float) (Math.pow((locationBox.getLatitude() - st.getDownside().getLatitude()), 2) - Math.pow((locationBox.getLongitude() - st.getDownside().getLongitude()), 2));
-
-            if (stationLength > a && stationLength > b) {
-                stationsPassed++;
-                //caltulate number of waypoints
-//                waypoint = new Waypoint(numWaypoints, this.routeID, new Coordinate(locationBox.getLatitude(), locationBox.getLongitude()), locationBox.getRecieved_time(), st.getId(), st.getId());
-            } else {
- //               waypoint = new Waypoint(numWaypoints, this.routeID, new Coordinate(locationBox.getLatitude(), locationBox.getLongitude()), locationBox.getRecieved_time(), stations.get(stationsPassed - 1).getId(), st.getId());
-            }
-
-//            dataReader.saveWaypoint(waypoint);
-            numWaypoints++;
-        }
+            updateRasberryHandler();
 
     }
 
@@ -168,34 +174,11 @@ public class Trip {
         return nearest;
     }
 
-    public float[] getCordinatesOfTheStations(int stationID, int latitude, int longitude) {
-        return null;
-    }
-
-    public void countDelayToStations() {
-
-    }
-
-    public void didStationPassed() {
-    }
-
-    public void estimateTimeForAllStations() {
-    }
-
-    public void getTimeOfNeareestLocation() {
-    }
-
+    //removed passedstationIDs from the argument list
     public void updateRasberryHandler() {
-        RasberryHandler.getInstance().updateFromTrip(routeID, routeStationIdList, passedStationIds, estimatedArrivalTime);
+        RasberryHandler.getInstance().updateFromTrip(routeID,passedStationIds,estimatedArrivalTime);
+        //RasberryHandler.getInstance().updateFromTrip();
     }
-
-    private void estimatedArrivalTimeForStations() {
-    }
-
-    public void setRouteId(int rid) {
-        routeID = rid;
-    }
-
    
 
     static {
@@ -204,11 +187,4 @@ public class Trip {
         } catch (SQLException ex) {
             Logger.getLogger(Trip.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    //////////////////////
-    public int getIdOfNearestLocation(int latitude, int longitude) {
-        //get ID from the array
-        return 0;
-    }
-}
+    }}

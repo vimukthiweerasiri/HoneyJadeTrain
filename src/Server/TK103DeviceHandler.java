@@ -101,10 +101,11 @@ public class TK103DeviceHandler {
     public LocationBox createLocation(String s) {
 
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.SECOND, -5);
+        cal.set(2014, 6, 23, 8, 8, 00);
+        //       cal.add(Calendar.SECOND, -5);
         return new LocationBox("12345", new Date(cal.getTime().getTime()),
-                new Date(Calendar.getInstance().getTime().getTime()),
-                5.5042f, 79.8875f, 102.34f, 200.4f);
+                new Date(cal.getTime().getTime()),
+                3.12f, 5.35f, 102.34f, 200.4f);
     }
 
 //    public LocationBox parse(String data) {

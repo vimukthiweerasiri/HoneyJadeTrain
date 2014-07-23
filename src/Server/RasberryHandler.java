@@ -19,11 +19,14 @@ public class RasberryHandler {
 
     public static RasberryHandler getInstance() {
         if (rasberryHandler == null) {
-            return rasberryHandler;
+            return new RasberryHandler();
         }
         return rasberryHandler;
     }
 
-    public void updateFromTrip(int routeID, int[] routeStationIdList, boolean[] passedStationIds, String[] estimatedArrivalTime) {
+    public void updateFromTrip(int routeID,boolean[] passedStationIds, String[] estimatedArrivalTime) {
+        for(int i=0;i<passedStationIds.length;i++){
+            System.out.println(routeID+" "+" "+passedStationIds[i]+" "+estimatedArrivalTime[i]);
+        }
     }
 }

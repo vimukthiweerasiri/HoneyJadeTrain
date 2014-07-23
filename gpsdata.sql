@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 22, 2014 at 07:07 AM
+-- Generation Time: Jul 23, 2014 at 03:15 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.9
 
@@ -127,10 +127,19 @@ INSERT INTO `station` (`stationID`, `up_latitude`, `up_longitude`, `down_latitud
 CREATE TABLE IF NOT EXISTS `station_rp` (
   `stationID` tinyint(4) unsigned NOT NULL,
   `rpID` tinyint(4) NOT NULL,
+  `stationName` varchar(50) NOT NULL,
   PRIMARY KEY (`stationID`,`rpID`),
   UNIQUE KEY `rpID` (`rpID`),
   KEY `stationID` (`stationID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `station_rp`
+--
+
+INSERT INTO `station_rp` (`stationID`, `rpID`, `stationName`) VALUES
+(1, 1, 'Ganemulla'),
+(2, 2, 'Gampaha');
 
 -- --------------------------------------------------------
 
@@ -157,9 +166,9 @@ CREATE TABLE IF NOT EXISTS `waypoint` (
 --
 
 INSERT INTO `waypoint` (`waypointindex`, `routeID`, `latitude`, `longitude`, `time_reach`, `previous_station`, `next_station`) VALUES
-(1, 12, '2.000000', '5.200000', '10:02:00', 1, 2),
-(2, 12, '3.000000', '5.300000', '10:03:00', 1, 2),
-(3, 12, '4.000000', '5.400000', '10:04:00', 1, 2);
+(1, 12, '2.000000', '5.200000', '08:01:15', 1, 2),
+(2, 12, '3.000000', '5.300000', '07:02:35', 1, 2),
+(3, 12, '4.000000', '5.400000', '08:03:45', 1, 2);
 
 --
 -- Constraints for dumped tables

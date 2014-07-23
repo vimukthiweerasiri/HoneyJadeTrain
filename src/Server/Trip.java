@@ -42,6 +42,7 @@ public class Trip {
     private String[] estimatedArrivalTimeForStations;
     private String[] estimatedArrivalTime;
     private boolean[] passedStationIds;         //is this required?
+    private int[] stationCordinateId;
 
 //    private float startedLatitude;
 //    private float startedLongitude;
@@ -96,13 +97,19 @@ public class Trip {
             this.passedStationIds = new boolean[stations.size()];
             this.stationTimes = new Time[stations.size()];
             this.estimatedArrivalTime=new String[stations.size()];
-
+            
+            this.stationCordinateId=new int[stations.size()];
+            this.passedStationIds=new boolean[stations.size()];
+            
             //initializing the estimated arrival times
             for (int i = 0; i < stations.size(); i++) {
                 Coordinate upside = stations.get(i).getUpside();
                 Waypoint nearest = getNearestWaypoint(upside.getLatitude(), upside.getLongitude());
                 //System.out.println(nearest.getActualReachTime().toString());
+                passedStationIds[i]=true;
+                stationCordinateId[i]=nearest.getId();
                 stationTimes[i] = nearest.getEstimateReachTime();
+                
             }
             //System.out.println("");
         } catch (SQLException ex) {
@@ -136,6 +143,9 @@ public class Trip {
         Waypoint waypoint;
 
             waypoint = getNearestWaypoint(locationBox.getLatitude(), locationBox.getLongitude());
+            for(int i=0;i<stationCordinateId.length;i++){
+                if(waypoint.getId()>stationCordinateId[i]) passedStationIds[i]=false;
+            }
             Time newtime=new Time(locationBox.getRecieved_time().getTime());
             Time waytime=new Time(waypoint.getEstimateReachTime().getTime());
             

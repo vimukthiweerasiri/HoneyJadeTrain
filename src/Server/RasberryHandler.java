@@ -33,11 +33,7 @@ public class RasberryHandler {
 
     public void updateFromTrip(int routeID,ArrayList<Station> station,boolean[] passedStationIds, String[] estimatedArrivalTime) {
         for(int i=0;i<passedStationIds.length;i++){
-            //Rasberry.getInstance(station.get(0).getId()).display(routeID,estimatedArrivalTime[i]);
-            //System.out.println(routeID+" "+station.get(i).getId()+" "+passedStationIds[i]+" "+estimatedArrivalTime[i]);
-            //System.out.println(station.get(i).getId());
-            //System.out.println(Rasberry.getInstance(station.get(i).getId()).rasberryID);
-            Rasberry.getInstance(station.get(i).getId()).display(routeID, estimatedArrivalTime[i]);
+            if(passedStationIds[i]) Rasberry.getInstance(station.get(i).getId()).display(routeID, estimatedArrivalTime[i]);
         }
     }
     

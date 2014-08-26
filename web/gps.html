@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <title>Simple markers</title>
+        
+        <style>
+            html, body, #map-canvas {
+                height: 100%;
+                margin: 0px;
+                padding: 0px
+            }
+        </style>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+        <script>
+            var map;
+            var markers = [];
+			var infoWindows = [];
+			
+            function initialize() {
+				update();
+				// Refresh every 3 seconds
+				setInterval(update, 3000);
+            }
+            
+            google.maps.event.addDomListener(window, "load", initialize);
+
+            function update() {
+				// Send request to server and get location data
+				var req = new XMLHttpRequest();  
+				req.open("GET", "/update", false);  
+				req.overrideMimeType("application/json");
+				
+				// This function will update the map once data is received
+				req.onload = function() {
+					var data = JSON.parse(this.responseText);
+					
+					// process for all train records received
+					for(var i in data) {
+						var record = data[i];
+						
+						var location = new google.maps.LatLng(record.lat, record.lon);
+
+						// Create map if not yet created
+						if(!map) {
+							console.log("Creating map...");
+							var mapOptions = {
+								zoom: 18,
+								center: location
+							}
+							map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+							// Center the map on the new position
+							map.setCenter(location);  
+						}
+						
+						if (markers[i]) {
+							// Marker already created - Move it
+							markers[i].setPosition(location);
+						}
+						else {
+							console.log("Creating marker " + i + "...");
+							// Marker does not exist - Create it
+							markers[i] = new google.maps.Marker({
+								position: location,
+								map: map,
+								title: "HoneyJADE"
+							});
+						}
+
+						// Display information in InfoWindow
+						var info = "Route ID: " + record.id + "<br/>"
+								+ "Latitude: " + record.lat + "<br/>"
+								+ "Longitude: " + record.lon + "<br/>"
+								+ "Next Station: " + record.next + "<br/>"
+								+ "ETA: " + record.eta;
+						
+						if (infoWindows[i]) {
+							// InfoWindow already created - Update its contents
+							infoWindows[i].setContent(info);
+						}
+						else {
+							console.log("Creating InfoWindow...");
+							// InfoWindow does not exist - Create it
+							infoWindows[i] = new google.maps.InfoWindow({
+								content: info
+							});
+							infoWindows[i].open(map, markers[i]);
+						}
+					}
+				};
+				
+				req.send(null);
+            }
+                
+        </script>
+    </head>
+    <body>
+        <div id="map-canvas"></div>
+    </body>
+</html>

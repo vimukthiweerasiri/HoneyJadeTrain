@@ -5,12 +5,8 @@
  */
 package Server;
 
-import Database.DataHandler;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  *
@@ -18,53 +14,47 @@ import java.util.logging.Logger;
  */
 public class Rasberry {
 
-    public static ArrayList<Rasberry> rasberry = new ArrayList<>();
-    public int rasberryID;
-    private String stationName;
-    private static DataHandler dataReader = null;
+	public static HashMap<Integer, Rasberry> rasberries = new HashMap<>();
+	public int rasberryID;
+	private HashMap<Integer, String> updates;	// (RouteID, ETA) pairs
 
-    private Rasberry(int rasberryId) {
-        this.rasberryID = rasberryId;
-        ResultSet rs=null;
-        
-        try {
-            rs = dataReader.getStationNameById(rasberryId);
-        } catch (SQLException ex) {
-            Logger.getLogger(Rasberry.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        try {
-            
-            while (rs.next()) {
-                stationName=rs.getString(1);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Rasberry.class.getName()).log(Level.SEVERE, null, ex);
-        }
-                
-    }
+	private Rasberry(int rasberryId) {
+		this.rasberryID = rasberryId;
+		this.updates = new HashMap<>();
+	}
 
-    public void display(int id,String message) {
-        System.out.println(stationName + ": The train "+id+" will arrive at " + message);
-    }
+	// display details of current Rasberry object
+	public void display() {
+		System.out.println("Station " + rasberryID + ": ");
+		
+		// iterate over data in current Rasberry object 
+		Iterator<Integer> iter = updates.keySet().iterator();
+		int route;
+		while(iter.hasNext()) {
+			route = iter.next();
+			System.out.println("- The train " + route + " will arrive in "
+					+ updates.get(route) + " seconds");
+		}
+	}
+	
+	// update list with latest details
+	public void update(int routeId, String eta) {
+		// delete any existing ETA entries for current route
+		updates.remove(routeId); 
+		// now add the new one
+		updates.put(routeId, eta);
+	}
+	
+	public HashMap<Integer, String> getUpdates() {
+		return this.updates;
+	}
 
-    public static Rasberry getInstance(int rasBID) {
-        for (Rasberry rasberry1 : rasberry) {
-            if (rasberry1.rasberryID == rasBID) {
-                return rasberry1;
-            }
-        }
-        Rasberry newrasberry = new Rasberry(rasBID);
-        rasberry.add(newrasberry);
-
-        return newrasberry;
-    }
-
-     static {
-        try {
-            dataReader = new DataHandler();
-        } catch (SQLException ex) {
-            Logger.getLogger(Trip.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	public static Rasberry getInstance(int rasBID) {
+		Rasberry result = rasberries.get(rasBID); 
+		if (result == null) {
+			result = new Rasberry(rasBID);
+			rasberries.put(rasBID, result);
+		}
+		return result;
+	}
 }

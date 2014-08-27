@@ -34,7 +34,7 @@ public class DataHandler {
         this.hostname = "localhost";
         this.dbName = "gpsdata";
         this.username = "root";
-        this.password = "abc";
+        this.password = "";
 
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();

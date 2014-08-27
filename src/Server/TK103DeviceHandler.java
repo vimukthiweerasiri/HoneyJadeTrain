@@ -17,104 +17,103 @@ import java.sql.Date;
  */
 public class TK103DeviceHandler {
 
-    private static TK103DeviceHandler tK103DeviceHandler;
-    public static int i = 0;
+	private static TK103DeviceHandler tK103DeviceHandler;
+	public static int i = 0;
 
-    private TK103DeviceHandler() {
-    }
+	private TK103DeviceHandler() {
+	}
 
-    public static TK103DeviceHandler getInstance() {
-        i++;
-        if (tK103DeviceHandler == null) {
-            tK103DeviceHandler = new TK103DeviceHandler();
-        }
-        return tK103DeviceHandler;
-    }
+	public static TK103DeviceHandler getInstance() {
+		i++;
+		if (tK103DeviceHandler == null) {
+			tK103DeviceHandler = new TK103DeviceHandler();
+		}
+		return tK103DeviceHandler;
+	}
 
-    //starts listening to the port and to recieve data
-    public void executeServer() {
-        //set the port number
-        int port = 4480;
+	//starts listening to the port and to recieve data
+	public void executeServer() {
+		//set the port number
+		int port = 4480;
 
-        try {
-            ServerSocket welcomeSocket = new ServerSocket(port);
-            //until shut down
-            while (true) {
-                //making the socket connection
-                System.out.println("waiting for a connection...");
-                Socket connectionSocket = welcomeSocket.accept();
-                System.out.println(connectionSocket.getInetAddress().toString() + " connected");
+		try {
+			ServerSocket welcomeSocket = new ServerSocket(port);
+			//until shut down
+			while (true) {
+				//making the socket connection
+				System.out.println("waiting for a connection...");
+				Socket connectionSocket = welcomeSocket.accept();
+				System.out.println(connectionSocket.getInetAddress().toString() + " connected");
 
-                //making the input & output streams
-                BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-                DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+				//making the input & output streams
+				BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+				DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
 
-                int c = 5;
-                String s = "";
-                while (c > 0) {
-                    try {
-                        c = inFromClient.read();
-                        //System.out.print((char) c);
-                        s += (char) c;
-                        if (c == ';') {
-                            System.out.println(s + " " + new SimpleDateFormat("yyyy:MM:dd_HH:mm:ss").format(Calendar.getInstance().getTime()));
-                            {
-                                if (s.contains("##")) {
-                                    outToClient.writeBytes("LOAD");
-                                    sleep(3000);
-                                    outToClient.writeBytes("ON");
-                                    sleep(1000);
-                                    outToClient.writeBytes("ON");
-                                    sleep(3000);
-                                    outToClient.writeBytes("**,imei:863070014296916,C,10s");
-                                    sleep(1000);
-                                    outToClient.writeBytes("**,imei:863070014296916,C,10s");
-                                    System.out.println("Initializing...");
-                                }
-                            }
-                            handleData(s);
-                            s = "";
-                        }
-                    } catch (IOException e) {
-                        try {
-                            sleep(2000);
-                        } catch (InterruptedException ie) {
-                        }
-                    } catch (InterruptedException ie) {
-                    }
-                }
-            }
-        } catch (IOException ioe) {
-        }
-    }
+				int c = 5;
+				String s = "";
+				while (c > 0) {
+					try {
+						c = inFromClient.read();
+						//System.out.print((char) c);
+						s += (char) c;
+						if (c == ';') {
+							System.out.println(s + " " + new SimpleDateFormat("yyyy:MM:dd_HH:mm:ss").format(Calendar.getInstance().getTime()));
+							{
+								if (s.contains("##")) {
+									outToClient.writeBytes("LOAD");
+									sleep(3000);
+									outToClient.writeBytes("ON");
+									sleep(1000);
+									outToClient.writeBytes("ON");
+									sleep(3000);
+									outToClient.writeBytes("**,imei:863070014296916,C,10s");
+									sleep(1000);
+									outToClient.writeBytes("**,imei:863070014296916,C,10s");
+									System.out.println("Initializing...");
+								}
+							}
+							handleData(s);
+							s = "";
+						}
+					} catch (IOException e) {
+						try {
+							sleep(2000);
+						} catch (InterruptedException ie) {
+						}
+					} catch (InterruptedException ie) {
+					}
+				}
+			}
+		} catch (IOException ioe) {
+		}
+	}
 
-    //get recieved string from server and decide the type and what to do
-    public void handleData(String s) throws InterruptedException {
-        //DeviceHandlingServer.getInstance().saveLog(s);
-        //if it is a LocationBox
-        //DeviceHandlingServer.getInstance().saveLocation(null);
-        //DeviceHandlingServer.getInstance().executeLocation(createLocation(s));
-        int i=8;
-        while(i<9){
-            DeviceHandlingServer.getInstance().executeLocation(createLocation(Integer.toString(i)));
-            Thread.sleep(1000);
-            i++;
-            
-        }
+	//get recieved string from server and decide the type and what to do
+	public void handleData(String s) throws InterruptedException {
+		//DeviceHandlingServer.getInstance().saveLog(s);
+		//if it is a LocationBox
+		//DeviceHandlingServer.getInstance().saveLocation(null);
+		//DeviceHandlingServer.getInstance().executeLocation(createLocation(s));
+//		int i = 0;
+//		while (i < 60) {
+			DeviceHandlingServer.getInstance().executeLocation(createLocation(Integer.toString(0)));
+//			Thread.sleep(1000);
+//			i++;
 
-    }
+//		}
 
-    //decode the incoming string into the parametes which needed to make a LocationBox
-    public LocationBox createLocation(String s) {
+	}
 
-        Calendar cal = Calendar.getInstance();
-        cal.set(2014, 6, 23, 8, Integer.parseInt(s), 00);
-        //       cal.add(Calendar.SECOND, -5);
-        return new LocationBox("12345", new Date(cal.getTime().getTime()),
-                new Date(cal.getTime().getTime()),
-                3.12f, 5.35f, 102.34f, 200.4f);
-    }
+	//decode the incoming string into the parametes which needed to make a LocationBox
+	public LocationBox createLocation(String s) {
 
+		Calendar cal = Calendar.getInstance();
+		cal.set(2014, 6, 23, 10, 2, 0);
+		//       cal.add(Calendar.SECOND, -5);
+		return new LocationBox("12345", new Date(cal.getTime().getTime()),
+				new Date(cal.getTime().getTime()),
+				6.0831f, 79.1361f, 102.34f, 200.4f);
+	}
 //    public LocationBox parse(String data) {
 //	float speed = 0, direction = 0;
 //

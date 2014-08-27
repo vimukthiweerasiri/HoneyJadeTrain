@@ -70,7 +70,7 @@ public class WebServer {
 			logger.log(Level.INFO, "Starting web server...");
 
 			HttpServer server = HttpServer.create(
-					new InetSocketAddress(8080), 0);
+					new InetSocketAddress(80), 0);
 			server.createContext(MAP_URL, new MapViewer());
 			server.createContext(UPDATE_URL, new UpdateHandler());
 			server.setExecutor(null); // creates a default executor
@@ -113,16 +113,25 @@ public class WebServer {
 
 	public static void main(String[] arg) {
 		final WebServer server = new WebServer();
-		final float lat1 = 5.0234f, lon1 = 80.9546f;
-		final float lat2 = 5.1234f, lon2 = 80.4546f;
-		final float lat3 = 5.3234f, lon3 = 80.3546f;
-		final float lat4 = 5.0234f, lon4 = 80.6546f;
+
+		// actual coordinates for the 4 towns
+		final float lat1 = 7.0667f, lon1 = 79.95f;
+		final float lat2 = 7.1333f, lon2 = 80.0f;
+		final float lat3 = 6.8494f, lon3 = 79.9236f;
+		final float lat4 = 7.75f, lon4 = 80.25f;
+		
+//		// coordinates for quick demo
+//		final float lat1 = 7.0667f, lon1 = 79.95f;
+//		final float lat2 = 7.1667f, lon2 = 80.005f;
+//		final float lat3 = 7.3667f, lon3 = 80.23f;
+//		final float lat4 = 7.0667f, lon4 = 80.1f;
+		
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				while (true) {
-					server.update(1, lat1 + (float)(Math.random()-0.5)*0.0002f,
-							lon1 + (float)(Math.random()-0.5)*0.0002f,
+					server.update(1, lat1 + (float)(Math.random()-0.5)*0.002f,
+							lon1 + (float)(Math.random()-0.5)*0.002f,
 							"Ganemulla", "3:30");
 					try {
 						Thread.sleep(100);
@@ -135,8 +144,8 @@ public class WebServer {
 			@Override
 			public void run() {
 				while (true) {
-					server.update(2, lat2 + (float)(Math.random()-0.5)*0.0002f,
-							lon2 + (float)(Math.random()-0.5)*0.0002f,
+					server.update(2, lat2 + (float)(Math.random()-0.5)*0.002f,
+							lon2 + (float)(Math.random()-0.5)*0.002f,
 							"Gampaha", "6:00");
 					try {
 						Thread.sleep(1000);
@@ -149,8 +158,8 @@ public class WebServer {
 			@Override
 			public void run() {
 				while (true) {
-					server.update(3, lat3 + (float)(Math.random()-0.5)*0.0002f,
-							lon3 + (float)(Math.random()-0.5)*0.0002f,
+					server.update(3, lat3 + (float)(Math.random()-0.5)*0.002f,
+							lon3 + (float)(Math.random()-0.5)*0.002f,
 							"Maharagama", "0:05");
 					try {
 						Thread.sleep(700);
@@ -163,8 +172,8 @@ public class WebServer {
 			@Override
 			public void run() {
 				while (true) {
-					server.update(4, lat4 + (float)(Math.random()-0.5)*0.0002f,
-							lon4 + (float)(Math.random()-0.5)*0.0002f,
+					server.update(4, lat4 + (float)(Math.random()-0.5)*0.002f,
+							lon4 + (float)(Math.random()-0.5)*0.002f,
 							"Kurunegala", "8:30");
 					try {
 						Thread.sleep(250);
